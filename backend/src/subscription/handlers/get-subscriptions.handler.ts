@@ -8,17 +8,23 @@ import { Subscription } from '../entities/subscription.entity';
 
 @Injectable()
 @QueryHandler(GetSubscriptionsQuery)
-export class GetSubscriptionsHandler implements IQueryHandler<GetSubscriptionsQuery> {
+export class GetSubscriptionsHandler
+  implements IQueryHandler<GetSubscriptionsQuery>
+{
   constructor(
     @InjectRepository(Subscription)
     private readonly subscriptionRepository: Repository<Subscription>,
   ) {}
 
   async execute(query: GetSubscriptionsQuery): Promise<Subscription[]> {
-    const { accountId } = query;
+    const { accountId, type, status } = query;
 
     return this.subscriptionRepository.find({
-      where: { accountId },
+      where: {
+        accountId,
+        ...(type ? { type } : {}),
+        ...(status ? { status } : {}),
+      },
       order: { createdAt: 'DESC' },
     });
   }

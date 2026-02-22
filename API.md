@@ -125,8 +125,7 @@ Authorization: Bearer <token>
 {
   "type": "web",
   "status": "active",
-  "expiredAt": "2024-12-31T23:59:59.000Z",
-  "accountId": "some-uuid"
+  "expiredAt": "2024-12-31T23:59:59.000Z"
 }
 ```
 
@@ -154,6 +153,11 @@ Authorization: Bearer <token>
 
 Get all subscriptions for the authenticated user.
 
+**Query Parameters (optional):**
+
+- `type`: `web` | `ios` | `android`
+- `status`: any status string (example: `active`, `canceled`)
+
 **Headers:**
 
 ```
@@ -180,6 +184,83 @@ Authorization: Bearer <token>
 
 - `200` - Success
 - `401` - Unauthorized
+
+#### GET /subscriptions/summary
+
+Get subscription dashboard metrics for the authenticated user.
+
+**Headers:**
+
+```
+Authorization: Bearer <token>
+```
+
+**Response:**
+
+```json
+{
+  "total": 10,
+  "active": 7,
+  "expired": 2,
+  "expiringSoon": 1,
+  "byType": {
+    "web": 5,
+    "ios": 3,
+    "android": 2
+  }
+}
+```
+
+#### PATCH /subscriptions/:id
+
+Update one subscription owned by the authenticated user.
+
+**Headers:**
+
+```
+Authorization: Bearer <token>
+```
+
+**Request Body (all fields optional):**
+
+```json
+{
+  "type": "ios",
+  "status": "canceled",
+  "expiredAt": "2026-12-31T23:59:59.000Z"
+}
+```
+
+**Status Codes:**
+
+- `200` - Updated successfully
+- `400` - Validation error
+- `401` - Unauthorized
+- `404` - Subscription not found
+
+#### DELETE /subscriptions/:id
+
+Delete one subscription owned by the authenticated user.
+
+**Headers:**
+
+```
+Authorization: Bearer <token>
+```
+
+**Response:**
+
+```json
+{
+  "success": true
+}
+```
+
+**Status Codes:**
+
+- `200` - Deleted successfully
+- `401` - Unauthorized
+- `404` - Subscription not found
 
 ## Data Types
 
