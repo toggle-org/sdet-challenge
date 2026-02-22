@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { Account } from '../../auth/entities/account.entity';
 
 export enum SubscriptionType {
@@ -23,6 +31,15 @@ export class Subscription {
 
   @Column()
   expiredAt: Date;
+
+  @Column({ type: 'int', nullable: true })
+  planMonths: number | null;
+
+  @Column({ type: 'int', nullable: true })
+  priceCents: number | null;
+
+  @Column({ nullable: true })
+  paymentCardLast4: string | null;
 
   @CreateDateColumn()
   createdAt: Date;

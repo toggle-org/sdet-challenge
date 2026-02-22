@@ -19,13 +19,16 @@ A full-stack application with NestJS backend and React frontend designed for SDE
 - `GET /api/auth/profile` - Get current user profile
 - `POST /api/subscriptions` - Create a subscription for the authenticated user
 - `GET /api/subscriptions` - Get all subscriptions for the authenticated user
+- `GET /api/subscriptions/summary` - Get subscription metrics for dashboard cards
+- `PATCH /api/subscriptions/:id` - Update subscription status/type/expiry
+- `DELETE /api/subscriptions/:id` - Delete a subscription
 
 ### Frontend Application
 
 - **Sign Up Page**: User registration with form validation
 - **Sign In Page**: User authentication
-- **Home Page**: Dashboard displaying user information and subscriptions
-- **Subscription Management**: Create and view subscriptions
+- **Home Page**: Dashboard displaying user information, summary metrics, and subscriptions
+- **Subscription Management**: Create, filter, renew, cancel, and delete subscriptions
 - **Responsive Design**: Mobile-friendly interface using Tailwind CSS
 
 ## 📊 Data Models
@@ -250,14 +253,12 @@ This project is designed for SDET interviews and provides multiple testing oppor
 ### Suggested Test Scenarios
 
 1. **User Registration and Authentication**
-
    - Valid/invalid email formats
    - Password strength validation
    - Duplicate email handling
    - Login with valid/invalid credentials
 
 2. **Subscription Management**
-
    - Create subscriptions with different types
    - Validation of required fields
    - Date format validation
