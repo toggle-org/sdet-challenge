@@ -7,7 +7,12 @@
     "dev:frontend": "cd frontend && npm run dev",
     "build:backend": "cd backend && npm run build",
     "build:frontend": "cd frontend && npm run build",
-    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install && cd ../e2e && npm install",
+    "test:e2e": "npm run -C e2e test",
+    "test:e2e:ui": "npm run -C e2e test:ui",
+    "test:e2e:api": "npm run -C e2e test:api",
+    "test:e2e:chromium": "npm run -C e2e test:chromium",
+    "test:e2e:report": "npm run -C e2e test:report"
   },
   "keywords": ["sdet", "nestjs", "react", "typescript", "cqrs"],
   "author": "SDET Challenge",
