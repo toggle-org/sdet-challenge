@@ -2,7 +2,7 @@
 
 End-to-end testing suite using Playwright for the SDET Challenge application.
 
-**Total Tests:** 60+ (API + UI)
+**Total Tests:** 93 (53 API + 40 UI)
 
 ## Prerequisites
 
@@ -62,9 +62,10 @@ e2e/
 │   ├── subscriptions.spec.ts # Subscription CRUD tests
 │   └── authorization.spec.ts # Security/isolation tests
 ├── ui/
-│   ├── auth.spec.ts          # Sign in/up UI tests
+│   ├── auth.spec.ts           # Sign in/up UI tests
+│   ├── authorization.spec.ts  # Protected routes, user session
 │   ├── account-tabs.spec.ts  # Account tab navigation
-│   └── subscription.spec.ts  # Subscription purchase flow
+│   └── subscription.spec.ts   # Subscription purchase flow
 ├── fixtures/
 │   └── auth.fixture.ts       # Auth helpers and fixtures
 └── utils/
@@ -101,10 +102,12 @@ e2e/
 | **Sign In** | Valid signin flow, invalid credentials, validation errors, navigation |
 | **Sign Out** | Sign out flow, redirect to signin |
 | **Protected Routes** | Redirect unauthenticated users |
+| **Authorization** | Protected routes, redirect after sign out, user session |
 | **Account Tabs** | Tab navigation, user info display, active state |
 | **Subscription Purchase** | Modal open, 1m/3m plans, card validation, buy flow |
 | **Cancel Subscription** | Cancel with confirmation, dismiss confirmation, re-buy after cancel |
 | **Payment Methods** | Display after purchase, remove method |
+| **UI/API Sync** | Buy via UI verified via API, cancel via API reflected in UI |
 
 ## Assumptions
 

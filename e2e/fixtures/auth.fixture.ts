@@ -4,7 +4,7 @@ import { ApiClient, AuthResult, generateTestUser, User } from '../utils/api-clie
 type AuthFixture = {
   apiClient: ApiClient;
   createAuthenticatedUser: () => Promise<{ user: User; token: string }>;
-  loggedInPage: { page: Page; userData: ReturnType<typeof generateTestUser> };
+  loggedInPage: { page: Page; userData: ReturnType<typeof generateTestUser>; apiClient: ApiClient };
 };
 
 export const test = base.extend<AuthFixture>({
@@ -34,7 +34,8 @@ export const test = base.extend<AuthFixture>({
   loggedInPage: async ({ page, request }, use) => {
     const userData = generateTestUser();
     const apiClient = new ApiClient(request);
-    await apiClient.signUp(userData.email, userData.password, userData.name);
+    const { data: authData } = await apiClient.signUp(userData.email, userData.password, userData.name);
+    apiClient.setToken(authData.accessToken);
 
     await page.goto('/signin');
     await page.getByPlaceholder('Email address').fill(userData.email);
@@ -42,7 +43,7 @@ export const test = base.extend<AuthFixture>({
     await page.getByRole('button', { name: 'Sign in' }).click();
     await page.waitForURL(/\/home/);
 
-    await use({ page, userData });
+    await use({ page, userData, apiClient });
   },
 });
 

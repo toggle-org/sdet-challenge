@@ -132,8 +132,11 @@ test.describe('Subscription UI', () => {
 
       await expect(page.getByText('canceled', { exact: true })).toBeVisible();
 
-      const buyButton = page.getByRole('button', { name: 'Buy subscription' });
-      await expect(buyButton).toBeEnabled();
+      await buySubscription(page, 3);
+
+      await expect(page.getByText('Subscription purchased').first()).toBeVisible();
+      await expect(page.getByText('3 month(s)')).toBeVisible();
+      await expect(page.getByText('active', { exact: true })).toBeVisible();
     });
   });
 
@@ -189,6 +192,44 @@ test.describe('Subscription UI', () => {
       await expect(page.getByText('Price')).toBeVisible();
       await expect(page.getByText('$24.99')).toBeVisible();
       await expect(page.getByText('Expires')).toBeVisible();
+    });
+  });
+
+  test.describe('UI/API sync', () => {
+    test('should sync subscription to API after UI purchase', async ({ loggedInPage }) => {
+      const { page, apiClient } = loggedInPage;
+      await page.goto('/home');
+      await page.getByRole('button', { name: 'Subscriptions' }).click();
+
+      await buySubscription(page, 1);
+
+      const { data: subscriptions } = await apiClient.getSubscriptions();
+      expect(subscriptions.length).toBe(1);
+      expect(subscriptions[0].status).toBe('active');
+      expect(subscriptions[0].planMonths).toBe(1);
+    });
+
+    test('should reflect API cancellation in UI', async ({ loggedInPage }) => {
+      const { page, apiClient } = loggedInPage;
+      await page.goto('/home');
+      await page.getByRole('button', { name: 'Subscriptions' }).click();
+
+      await buySubscription(page, 1);
+
+      const { data: subscriptions } = await apiClient.getSubscriptions();
+      expect(subscriptions[0].status).toBe('active');
+
+      await apiClient.updateSubscription(subscriptions[0].id, { status: 'canceled' });
+
+      const { data: updatedSubs } = await apiClient.getSubscriptions();
+      expect(updatedSubs[0].status).toBe('canceled');
+
+      await page.goto('/home');
+      await page.getByRole('button', { name: 'Subscriptions' }).click();
+      await page.waitForLoadState('networkidle');
+
+      await expect(page.getByText('Status')).toBeVisible();
+      await expect(page.getByText('canceled', { exact: true })).toBeVisible();
     });
   });
 });

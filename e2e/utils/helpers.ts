@@ -51,20 +51,38 @@ export async function cancelSubscription(page: Page): Promise<void> {
 }
 
 export async function ensureNoSubscription(page: Page): Promise<void> {
+  await page.waitForLoadState('networkidle');
   const noSubscription = page.getByText('No subscriptions yet');
+  
   if (await noSubscription.isVisible()) {
     return;
   }
   
-  await cancelSubscription(page);
+  const cancelButton = page.getByRole('button', { name: 'Cancel subscription' });
+  if (await cancelButton.isVisible()) {
+    await handleDialog(page, 'accept', async () => {
+      await cancelButton.click();
+    });
+    await expect(page.getByText('Subscription canceled')).toBeVisible({ timeout: 10000 });
+  }
+  
+  await page.waitForTimeout(500);
 }
 
 export async function ensureActiveSubscription(page: Page, months: 1 | 3 = 1): Promise<void> {
   await page.waitForLoadState('networkidle');
+  await page.waitForTimeout(500);
+  
   const noSubscription = page.getByText('No subscriptions yet');
   const hasNoSubscription = await noSubscription.count() > 0 && await noSubscription.isVisible();
   
   if (hasNoSubscription) {
     await buySubscription(page, months);
+  } else {
+    const activeStatus = page.getByText('active', { exact: true });
+    const hasActive = await activeStatus.count() > 0 && await activeStatus.isVisible();
+    if (!hasActive) {
+      await buySubscription(page, months);
+    }
   }
 }

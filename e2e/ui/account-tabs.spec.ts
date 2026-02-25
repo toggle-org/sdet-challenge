@@ -48,7 +48,7 @@ test.describe('Account Tabs UI', () => {
     await expect(page.getByRole('heading', { name: 'Subscriptions' })).not.toBeVisible();
   });
 
-  test('should persist tab selection across page reloads (stored in state)', async ({ loggedInPage }) => {
+  test('should reset tab selection to default after page reload', async ({ loggedInPage }) => {
     const { page } = loggedInPage;
     await page.getByRole('button', { name: 'Subscriptions' }).click();
     await expect(page.getByRole('heading', { name: 'Subscriptions' })).toBeVisible();
