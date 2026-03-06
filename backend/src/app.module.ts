@@ -12,8 +12,9 @@ import { SubscriptionModule } from './subscription/subscription.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'database.sqlite',
+      type: 'sqljs',
+      location: 'database.sqlite',
+      autoSave: true,
       entities: [Account, Subscription],
       synchronize: true,
       logging: true,

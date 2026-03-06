@@ -7,7 +7,15 @@
     "dev:frontend": "cd frontend && npm run dev",
     "build:backend": "cd backend && npm run build",
     "build:frontend": "cd frontend && npm run build",
-    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "e2e": "playwright test",
+    "e2e:api": "playwright test --project=api",
+    "e2e:ui": "playwright test --project=ui",
+    "e2e:headed": "playwright test --project=ui --headed",
+    "e2e:report": "playwright show-report e2e/playwright-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0"
   },
   "keywords": ["sdet", "nestjs", "react", "typescript", "cqrs"],
   "author": "SDET Challenge",
