@@ -236,6 +236,16 @@ sdet-challenge/
 
 This project is designed for SDET interviews and provides multiple testing opportunities:
 
+### E2E Test Suite (Playwright)
+
+An end-to-end test suite (API + UI) lives in the **`e2e/`** directory. It covers authentication, subscription lifecycle, payment methods, authorization, and UI flows. For setup and run instructions, see **[e2e/README.md](e2e/README.md)**.
+
+```bash
+npm run e2e        # all tests
+npm run e2e:api    # API only
+npm run e2e:ui     # UI only
+```
+
 ### API Testing
 
 - RESTful API endpoints for automation testing
