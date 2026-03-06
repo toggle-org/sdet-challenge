@@ -47,6 +47,7 @@ const SignUp: React.FC = () => {
               </label>
               <input
                 {...register('name', { required: 'Name is required' })}
+                id="name"
                 type="text"
                 className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Full name"
@@ -67,6 +68,7 @@ const SignUp: React.FC = () => {
                     message: 'Invalid email address'
                   }
                 })}
+                id="email"
                 type="email"
                 className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Email address"
@@ -87,6 +89,7 @@ const SignUp: React.FC = () => {
                     message: 'Password must be at least 6 characters'
                   }
                 })}
+                id="password"
                 type="password"
                 className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Password"

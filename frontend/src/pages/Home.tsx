@@ -342,8 +342,9 @@ const Home: React.FC = () => {
             </div>
 
             <div className="mt-4">
-              <label className="block text-sm text-slate-700 mb-1">Card number</label>
+              <label htmlFor="cardNumber" className="block text-sm text-slate-700 mb-1">Card number</label>
               <input
+                id="cardNumber"
                 value={cardNumber}
                 onChange={(e) => setCardNumber(e.target.value.replace(/\s/g, ""))}
                 placeholder="4242424242424242"
